@@ -37,7 +37,7 @@ jobs:
         esac
         docker buildx build -t \
            ikuaki1009/yunzai-docker-images:latest \
-          --platform "$PLATFORM_TAG"
+          --platform "$PLATFORM_TAG" \
           ./docker
     - name: Login to GHCR
       if: github.ref == 'refs/heads/master' && github.event_name != 'push' && github.repository == 'ikuaki1009/yunzai-docker-images'
