@@ -28,7 +28,8 @@ jobs:
 
     - name: Build images
       run: |
-        git clone https://gitee.com/yoimiya-kokomi/Yunzai-Bot.git
+        git clone https://github.com/ikuaki1009/Miao-Yunzai.git -b patch-1
+        cd Miao-Yunzai
         case '${{ matrix.CPU_ARCH }}' in
           arm)     PLATFORM_TAG="linux/arm/v7";;
           aarch64) PLATFORM_TAG="linux/arm64";;
