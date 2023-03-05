@@ -36,11 +36,11 @@ jobs:
           *)       PLATFORM_TAG="linux/amd64";;
         esac
         docker buildx build -t \
-           ikuaki1009/yunzai-docker-images:latest \
+           ghcr.io/ikuaki1009/yunzai-docker-images:latest \
           --platform "$PLATFORM_TAG" \
           ./docker
     - name: Login to GHCR
-      if: github.ref == 'refs/heads/main' && github.event_name != 'push' && github.repository == 'ikuaki1009/yunzai-docker-images'
+      if: github.ref == 'refs/heads/main' && github.repository == 'ikuaki1009/yunzai-docker-images'
       uses: docker/login-action@v2
       with:
         registry: ghcr.io
@@ -48,7 +48,7 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Push
-      if: github.ref == 'refs/heads/main' && github.event_name != 'push' && github.repository == 'ikuaki1009/yunzai-docker-images'
+      if: github.ref == 'refs/heads/main' && github.repository == 'ikuaki1009/yunzai-docker-images'
       run: |
         docker push ghcr.io/ikuaki1009/yunzai-docker-images:latest
  
