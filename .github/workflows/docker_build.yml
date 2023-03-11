@@ -35,7 +35,6 @@ jobs:
           aarch64) PLATFORM_TAG="linux/arm64";;
           *)       PLATFORM_TAG="linux/amd64";;
         esac
-        sed -i "s/gitee.com/github.com/g" ./docker/Dockerfile
         sed -i "s/mirrors.ustc.edu.cn/deb.debian.org/g" ./docker/Dockerfile
         sed -i "s/pypi.tuna.tsinghua.edu.cn/pypi.org/g" ./docker/Dockerfile
         docker buildx build -t \
