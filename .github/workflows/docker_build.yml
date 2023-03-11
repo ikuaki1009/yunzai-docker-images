@@ -28,13 +28,14 @@ jobs:
 
     - name: Build images
       run: |
-        git clone https://github.com/ikuaki1009/Miao-Yunzai.git -b patch-1
+        git clone https://github.com/yoimiya-kokomi/Miao-Yunzai.git -b master
         cd Miao-Yunzai
         case '${{ matrix.CPU_ARCH }}' in
           arm)     PLATFORM_TAG="linux/arm/v7";;
           aarch64) PLATFORM_TAG="linux/arm64";;
           *)       PLATFORM_TAG="linux/amd64";;
         esac
+        sed -i "s/gitee.com/github.com/g" ./docker/Dockerfile
         docker buildx build -t \
            ghcr.io/ikuaki1009/yunzai-docker-images:latest \
           --platform "$PLATFORM_TAG" \
