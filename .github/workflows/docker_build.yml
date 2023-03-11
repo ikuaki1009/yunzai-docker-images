@@ -14,15 +14,9 @@ jobs:
     permissions:
       contents: read
       packages: write
-    strategy:
-      matrix:
-        CPU_ARCH:
-          - aarch64
-          - x86_64
     steps:
 
     - name: Setup binfmt_misc
-      if: (matrix.CPU_ARCH == 'aarch64') || (matrix.CPU_ARCH == 'arm')
       run: docker run --rm --privileged aptman/qus -s -- -p aarch64 arm
 
     - name: Login to GHCR
@@ -37,16 +31,11 @@ jobs:
       run: |
         git clone https://github.com/yoimiya-kokomi/Miao-Yunzai.git -b master
         cd Miao-Yunzai
-        case '${{ matrix.CPU_ARCH }}' in
-          arm)     PLATFORM_TAG="linux/arm/v7";;
-          aarch64) PLATFORM_TAG="linux/arm64";;
-          *)       PLATFORM_TAG="linux/amd64";;
-        esac
         sed -i "s|github.com/yoimiya-kokomi|gitee.com/yoimiya-kokomi|g" ./docker/Dockerfile
         sed -i "s/mirrors.ustc.edu.cn/deb.debian.org/g" ./docker/Dockerfile
         sed -i "s/pypi.tuna.tsinghua.edu.cn/pypi.org/g" ./docker/Dockerfile
         docker buildx build -t \
            ghcr.io/ikuaki1009/yunzai-docker-images:latest \
            --push \
-           --platform "$PLATFORM_TAG" \
+           --platform "linux/amd64,linux/arm64" \
            ./docker
