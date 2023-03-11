@@ -34,6 +34,7 @@ jobs:
         sed -i "s|github.com/yoimiya-kokomi|gitee.com/yoimiya-kokomi|g" ./docker/Dockerfile
         sed -i "s/mirrors.ustc.edu.cn/deb.debian.org/g" ./docker/Dockerfile
         sed -i "s/pypi.tuna.tsinghua.edu.cn/pypi.org/g" ./docker/Dockerfile
+        docker buildx create --name multiarch --driver docker-container --use
         docker buildx build -t \
            ghcr.io/ikuaki1009/yunzai-docker-images:latest \
            --push \
